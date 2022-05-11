@@ -1,29 +1,36 @@
 const func = require('./function');
+const auth = require('./../Authenticator/barCodeAuthenticator')
 
 module.exports = {
-    amount: async (req, res) => {
-        //validador da linha digitavel
-        let json = {
-            error: [],
-            result: []
-        };
-        try {
-            const barCode = req.params.code;
+    barcodeGenerator: async (req, res) => {
+        
+        const barCode = req.params.code;
+        let json = { error: [], result: [] };
 
-            const bankName = await func.getNameBank(barCode).then(result => result);
-            const amount = func.getAmount(barCode);
-            const expirationDate = func.getDate(barCode);
+        if(auth.Authenticator(barCode) === 0){
+            try {
+                const newBarCode = func.getBarCode(barCode);
+                const bankName = await func.getNameBank(barCode).then(result => result);
+                const amount = func.getAmount(barCode);
+                const expirationDate = func.getDate(barCode);
+    
+                json.result.push({
+                    barCode: newBarCode,
+                    bankName: bankName,
+                    amount: amount,
+                    expirationDate: expirationDate
+                });
 
-            json.result.push({
-                barCode: '21299758700000020000001121100012100447561740',
-                bankName: bankName,
-                amount: amount,
-                expirationDate: expirationDate
-            });
-        } catch(e) {
-            json.error.push(e);
+            } catch(e) {
+                json.error.push(e);
+                res.json(json.error);
+            }
+
+            res.json(json.result);
+        } else {
+            json.error.push({ Error: auth.Authenticator(barCode) });
+            
             res.json(json.error);
-        }
-        res.json(json.result);
+        }        
     }
 }
