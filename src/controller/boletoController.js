@@ -1,5 +1,5 @@
-const func = require('./function');
-const auth = require('./../Authenticator/barCodeAuthenticator');
+const func = require('../service/boletoService');
+const auth = require('../Authenticator/barCodeAuthenticator');
 
 module.exports = {
     barcodeGenerator: async (req, res) => {

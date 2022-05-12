@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const auth = require('./../Authenticator/titleBarCodeAuthenticator');
+const auth = require('../Authenticator/titleBarCodeAuthenticator');
 
 const getBarCode = barCode => {
 

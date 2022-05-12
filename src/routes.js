@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const func = require('./service/service')
+const func = require('./controller/boletoController')
 
 router.get('/boleto/:code', func.barcodeGenerator);
 
