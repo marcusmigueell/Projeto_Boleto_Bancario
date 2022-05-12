@@ -26,15 +26,16 @@ module.exports = {
                 res.json(json.error);
             }
 
-            res.json(json.result);
+            res.status(200).json(json.result);
+            
         } else {
-            if (func.getBarCode(barCode) === -1) {
-                json.error.push({ Error: "A representação numérica do código de barras possui algum(ns) dígito(s) inválido(s)!" });
-            } else {
+            if (auth.Authenticator(barCode) !== 0) {
                 json.error.push({ Error: auth.Authenticator(barCode) });
+            } else {
+                json.error.push({ Error: "A representação numérica do código de barras possui algum(ns) dígito(s) inválido(s)!" });
             }
 
-            res.json(json.error);
+            res.status(400).json(json.error);
         }        
     }
 }

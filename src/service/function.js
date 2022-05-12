@@ -12,7 +12,7 @@ const getBarCode = barCode => {
     const fieldThree = barCode.substring(21, 31);
     const fieldThreeDv = Number(barCode.substring(31, 32));
 
-    if( !auth.barCodeValidate(fieldTwo, fieldTwoDv) ||
+    if( !auth.barCodeValidate(fieldOne, FieldOneDv) ||
         !auth.barCodeValidate(fieldTwo, fieldTwoDv) ||
         !auth.barCodeValidate(fieldThree, fieldThreeDv) ) 
                 return -1;
