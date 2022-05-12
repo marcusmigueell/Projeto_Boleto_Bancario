@@ -1,16 +1,21 @@
 const fetch = require('node-fetch');
+const auth = require('./../Authenticator/titleBarCodeAuthenticator');
 
 const getBarCode = barCode => {
 
-    // const fieldOne = barCode.substring(0, 9);
-    // const FieldOneDv = Number(barCode.substring(9, 10));
+    const fieldOne = barCode.substring(0, 9);
+    const FieldOneDv = Number(barCode.substring(9, 10));
 
-    // const fieldTwo = barCode.substring(10, 20);
-    // const fieldTwoDv = barCode.substring(20, 21);
+    const fieldTwo = barCode.substring(10, 20);
+    const fieldTwoDv = Number(barCode.substring(20, 21));
 
-    // const fieldThree = barCode.substring(21, 31);
-    // const fieldThreeDv = barCode.substring(31, 32);
+    const fieldThree = barCode.substring(21, 31);
+    const fieldThreeDv = Number(barCode.substring(31, 32));
 
+    if( !auth.barCodeValidate(fieldTwo, fieldTwoDv) ||
+        !auth.barCodeValidate(fieldTwo, fieldTwoDv) ||
+        !auth.barCodeValidate(fieldThree, fieldThreeDv) ) 
+                return -1;
 
 
     const bank = barCode.substring(0,4);
@@ -21,9 +26,12 @@ const getBarCode = barCode => {
     const fieldTwoFree = barCode.substring(10, 20);
     const fieldThreeFree = barCode.substring(21, 31);
 
-    //verificar se esta correto o barcode
+    const newBarCode = bank + dv + dueDate + value + fieldOneFree + fieldTwoFree + fieldThreeFree;
     
-    return bank + dv + dueDate + value + fieldOneFree + fieldTwoFree + fieldThreeFree;
+    if( !auth.newBarCodeValidate(newBarCode, dv) )
+        return -1;
+
+    return newBarCode
 }
 
 const getNameBank = COMPE => {  
@@ -48,8 +56,6 @@ const getDate = barCode => {
     return expirationDate.toLocaleString().substring(0, 10);
 };
   
-
-
 module.exports = {
     getBarCode,
     getNameBank,
