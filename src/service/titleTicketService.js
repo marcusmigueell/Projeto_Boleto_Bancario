@@ -55,10 +55,35 @@ const getDate = barCode => {
 
     return expirationDate.toLocaleString().substring(0, 10);
 };
-  
+
+async function getResult(barCode) {
+
+    let json = { error: [], result: [] };
+
+    try {
+        const newBarCode = getBarCode(barCode);
+        const bankName = await getNameBank(barCode).then(result => result);
+        const amount = getAmount(barCode);
+        const expirationDate = getDate(barCode);
+
+        json.result.push({
+            barCode: newBarCode,
+            bankName: bankName,
+            amount: amount,
+            expirationDate: expirationDate
+        });
+
+    }catch(e) {
+            
+        json.error.push(e);
+        return json.error;
+
+    }
+
+    return json.result;
+};
+
 module.exports = {
-    getBarCode,
-    getNameBank,
-    getAmount, 
-    getDate
+    getResult,
+    getBarCode
 };

@@ -11,6 +11,7 @@ module.exports = {
         return ((Math.ceil(somatorio / 10) * 10) - somatorio) === dv;
     },
     newBarCodeValidate: (barCode, dv) => {
+        
         const partOne = barCode.substring(0, 4);
         const partTwo = barCode.substring(5, barCode.length);
         const newBarCode = partOne + partTwo;
@@ -31,5 +32,33 @@ module.exports = {
                 DV = 1;
 
         return DV === Number(dv);
+    },
+    newBarCode: (barCode) => {
+        
+        const partOne = barCode.substring(0, 3);
+        const partTwo = barCode.substring(4, barCode.length);
+        const newBarCode = partOne + partTwo;
+
+        const codigo = newBarCode.split('').reverse();
+
+        let multiplicador = 2;
+        const somatorio = codigo.reduce((acc, current) => {
+            const soma = Number(current) * multiplicador;
+            multiplicador = multiplicador === 9 ? 2 : multiplicador + 1;
+            return acc + soma;
+        }, 0);
+
+        const restoDivisao = somatorio % 11;
+        let DV;
+        
+        if (restoDivisao === 0 || restoDivisao === 1) {
+            DV = 0;
+        } else if (restoDivisao === 10) {
+            DV = 1
+        } else {
+            DV = restoDivisao;
+        }
+        
+        return partOne + DV.toString() + partTwo;
     }
 }
