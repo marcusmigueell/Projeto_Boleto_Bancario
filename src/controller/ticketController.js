@@ -8,11 +8,11 @@ module.exports = {
         const barCode = req.params.code;
         let json = { error: [], result: [] };
 
-        if(auth.Authenticator(barCode) === 0 /*&& titleFunc.getBarCode(barCode) !== -1*/){
+        if(auth.Authenticator(barCode) === 0 && titleFunc.getBarCode(barCode) !== -1){
 
             barCode.length === 47 ?
                 res.status(200).json(await titleFunc.getResult(barCode)) : 
-                res.status(200).json(await dealershipFunc.getResult(barCode));
+                res.status(200).json(dealershipFunc.getResult(barCode));
 
         } else {
 
