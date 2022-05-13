@@ -11,7 +11,7 @@ module.exports = {
                         titleFunc.getBarCode(barCode) :
                         dealershipFunc.getBarCode(barCode);
 
-        let json = { error: [], result: [] };
+        let error = {};
 
         if(auth.Authenticator(barCode) === 0 && funcValueTest !== -1){
 
@@ -22,12 +22,12 @@ module.exports = {
         } else {
 
             if (auth.Authenticator(barCode) !== 0) {
-                json.error.push({ Error: auth.Authenticator(barCode) });
+                error.error = auth.Authenticator(barCode);
             } else {
-                json.error.push({ Error: "A representação numérica do código de barras possui algum(ns) dígito(s) inválido(s)!" });
+                error.error = "A representação numérica do código de barras possui algum(ns) dígito(s) inválido(s)!";
             }
 
-            res.status(400).json(json.error);
+            res.status(400).json(error);
         }        
     }
 }

@@ -53,7 +53,8 @@ const getDate = barCode => {
 
 const getResult = barCode => {
 
-    let json = { error: [], result: [] };
+    let result = {};
+    let error = {};
 
     try {
         const newBarCode = getBarCode(barCode);
@@ -61,26 +62,22 @@ const getResult = barCode => {
         const expirationDate = getDate(newBarCode);
 
         if(expirationDate !== false) {
-            json.result.push({
-                barCode: newBarCode,
-                amount: amount,
-                expirationDate: expirationDate
-            });
+            result.barCode = newBarCode;
+            result.amount = amount;
+            result.expirationDate = expirationDate;
         } else {
-            json.result.push({
-                barCode: newBarCode,
-                amount: amount
-            });
+            result.barCode = newBarCode;
+            result.amount = amount;
         }
 
     }catch(e) {
             
-        json.error.push(e);
-        return json.error;
+        error.error = e;
+        return error;
 
     }
 
-    return json.result;
+    return result;
 };
 
 module.exports = {

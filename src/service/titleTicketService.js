@@ -34,12 +34,6 @@ const getBarCode = barCode => {
     return newBarCode
 }
 
-const getNameBank = COMPE => {  
-    return fetch(`https://brasilapi.com.br/api/banks/v1/${COMPE.substring(0,3)}`)
-        .then(res => res.json())
-        .then(dados => dados.name);
-};
-
 const getAmount = barCode => {
     const real = parseFloat(barCode.substring(barCode.length - 10, barCode.length - 2));
     const centavos = barCode.substring(barCode.length - 2, barCode.length);
@@ -56,31 +50,21 @@ const getDate = barCode => {
     return expirationDate.toLocaleString().substring(0, 10);
 };
 
-async function getResult(barCode) {
+const getResult = barCode => {
 
-    let json = { error: [], result: [] };
+    let result = {};
+    let error = {};
 
     try {
-        const newBarCode = getBarCode(barCode);
-        const bankName = await getNameBank(barCode).then(result => result);
-        const amount = getAmount(barCode);
-        const expirationDate = getDate(barCode);
-
-        json.result.push({
-            barCode: newBarCode,
-            bankName: bankName,
-            amount: amount,
-            expirationDate: expirationDate
-        });
-
+        result.barCode = getBarCode(barCode);
+        result.amount = getAmount(barCode);
+        result.expirationDate = getDate(barCode);
     }catch(e) {
-            
-        json.error.push(e);
-        return json.error;
-
+        error.error = e;
+        return error;
     }
 
-    return json.result;
+    return result;
 };
 
 module.exports = {
