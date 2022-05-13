@@ -1,5 +1,6 @@
 module.exports = {
     barCodeValidate: (barCode, dv) => {
+        /* Regra do módulo 10 para ambos os boletos para o digito verificador de cada campo. */
         const codigo = barCode.split('').reverse();
         const somatorio = codigo.reduce((acc, current, index) => {
             let indice = (((index + 1) % 2) + 1);
@@ -11,7 +12,7 @@ module.exports = {
         return ((Math.ceil(somatorio / 10) * 10) - somatorio) === dv;
     },
     newBarCodeValidate: (barCode, dv) => {
-        
+        /* Regra do modulo 11 para boletos de titulo. */
         const partOne = barCode.substring(0, 4);
         const partTwo = barCode.substring(5, barCode.length);
         const newBarCode = partOne + partTwo;
@@ -34,7 +35,7 @@ module.exports = {
         return DV === Number(dv);
     },
     newBarCode: (barCode) => {
-        
+        /* Regra do modulo 11 para boletos de convênio. */
         const partOne = barCode.substring(0, 3);
         const partTwo = barCode.substring(4, barCode.length);
         const newBarCode = partOne + partTwo;

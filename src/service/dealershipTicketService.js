@@ -13,7 +13,7 @@ const getBarCode = barCode => {
     
     const fieldFour = barCode.substring(36, 47);
     const fieldFourDv = Number(barCode.substring(47, 48));
-    
+    /* Retornar erro na validação dos DVs de cada campo. */
     if( !auth.barCodeValidate(fieldOne, FieldOneDv) ||
         !auth.barCodeValidate(fieldTwo, fieldTwoDv) ||
         !auth.barCodeValidate(fieldThree, fieldThreeDv) ||
@@ -27,6 +27,7 @@ const getBarCode = barCode => {
     return newBarCode
 }
 
+// Retornar valor do boleto.
 const getAmount = barCode => {
     const real = parseFloat(barCode.substring(4, 13));
     const centavos = barCode.substring(13, 15);
@@ -36,6 +37,7 @@ const getAmount = barCode => {
     return ticketValue;
 };
 
+// Retornar data de vencimento do boleto se existir.
 const getDate = barCode => {
 
     const newDate = new Date();
@@ -50,7 +52,7 @@ const getDate = barCode => {
     return `${year.toString()}-${month.toString()}-${day.toString()}`;
 };
   
-
+// Retornar os dados finais para a controller
 const getResult = barCode => {
 
     let result = {};
@@ -60,7 +62,7 @@ const getResult = barCode => {
         const newBarCode = getBarCode(barCode);
         const amount = getAmount(newBarCode);
         const expirationDate = getDate(newBarCode);
-
+        // Retornar data de vencimento do boleto entre os dados finais para controller se existir.
         if(expirationDate !== false) {
             result.barCode = newBarCode;
             result.amount = amount;
