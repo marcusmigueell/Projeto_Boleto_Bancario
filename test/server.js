@@ -1,7 +1,7 @@
 const express = require('express');
-const titleFunc = require('../service/titleTicketService');
-const dealershipFunc = require('../service/dealershipTicketService');
-const auth = require('../Authenticator/barCodeAuthenticator');
+const titleFunc = require('../src/service/titleTicketService');
+const dealershipFunc = require('../src/service/dealershipTicketService');
+const auth = require('../src/Authenticator/barCodeAuthenticator');
 
 const app = express();
 
