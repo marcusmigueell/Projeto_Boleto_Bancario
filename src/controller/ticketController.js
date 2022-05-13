@@ -6,9 +6,14 @@ module.exports = {
     barcodeGenerator: async (req, res) => {
         
         const barCode = req.params.code;
+
+        const funcValueTest = barCode.length === 47 ? 
+                        titleFunc.getBarCode(barCode) :
+                        dealershipFunc.getBarCode(barCode);
+
         let json = { error: [], result: [] };
 
-        if(auth.Authenticator(barCode) === 0 && titleFunc.getBarCode(barCode) !== -1){
+        if(auth.Authenticator(barCode) === 0 && funcValueTest !== -1){
 
             barCode.length === 47 ?
                 res.status(200).json(await titleFunc.getResult(barCode)) : 
