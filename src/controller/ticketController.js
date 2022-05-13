@@ -20,7 +20,7 @@ module.exports = {
         if(auth.Authenticator(barCode) === 0 && funcValueTest !== -1){
 
             barCode.length === 47 ?
-                res.status(200).json(await titleFunc.getResult(barCode)) : 
+                res.status(200).json(titleFunc.getResult(barCode)) : 
                 res.status(200).json(dealershipFunc.getResult(barCode));
 
         } else {
