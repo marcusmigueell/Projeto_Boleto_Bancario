@@ -48,7 +48,12 @@ const getDate = barCode => {
     const days = parseInt(barCode.substring(barCode.length - 14, barCode.length - 10));
     let expirationDate = new Date('1997-10-07 00:00:00.000');
     expirationDate.setDate(expirationDate.getDate() + days);
-    return expirationDate.toLocaleString().substring(0, 10);
+
+    const day = expirationDate.getDate();
+    const month = Number(expirationDate.getMonth())+1;
+    const year = expirationDate.getFullYear();
+    
+    return month < 10 ? `${year.toString()}-0${String(month)}-${day.toString()}` : `${year.toString()}-${String(month)}-${day.toString()}`;
 };
 
 // Retornar os dados finais para a controller
