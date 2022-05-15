@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon",
     "test": "jest",
-    "production": "pm2 start index.js --name appx-backend"
+    "production": "pm2 start src/index.js --name appx-backend"
   },
   "keywords": [],
   "author": "",
