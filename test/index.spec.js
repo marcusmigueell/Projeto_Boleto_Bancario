@@ -24,6 +24,13 @@ describe('Código de barras de convênio - SUCCESS.', () => {
         expect(res.body).toHaveProperty('barCode');
         expect(res.body).toHaveProperty('amount');
     });
+
+    it('Sem informação - data vencimento e resto divisão = 10.', async () => {
+        const res = await request(app).get('/boleto/822100602157048200974128322015409822901086059408');
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).toHaveProperty('barCode');
+        expect(res.body).toHaveProperty('amount');
+    });
 });
 
 describe('Código de barras de convênio - ERROR.', () => {
@@ -57,6 +64,14 @@ describe('Código de barras de título - SUCCESS.', () => {
 
     it('Com todas as informações.', async () => {
         const res = await request(app).get('/boleto/23793381286008300724968000063302589840000006192');
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).toHaveProperty('barCode');
+        expect(res.body).toHaveProperty('amount');
+        expect(res.body).toHaveProperty('expirationDate');
+    });
+
+    it('Com todas as informações. DV = 11', async () => {
+        const res = await request(app).get('/boleto/21290001192110101210804475617405175870000002000');
         expect(res.statusCode).toEqual(200);
         expect(res.body).toHaveProperty('barCode');
         expect(res.body).toHaveProperty('amount');
