@@ -46,9 +46,8 @@ const getAmount = barCode => {
 // Retornar data de vencimento do boleto.
 const getDate = barCode => {
     const days = parseInt(barCode.substring(barCode.length - 14, barCode.length - 10));
-    const expirationDate = new Date('1997-10-07 00:00:00.000');
+    let expirationDate = new Date('1997-10-07 00:00:00.000');
     expirationDate.setDate(expirationDate.getDate() + days);
-
     return expirationDate.toLocaleString().substring(0, 10);
 };
 
