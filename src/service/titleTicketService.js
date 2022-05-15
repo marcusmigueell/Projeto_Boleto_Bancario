@@ -56,16 +56,10 @@ const getDate = barCode => {
 const getResult = barCode => {
 
     let result = {};
-    let error = {};
 
-    try {
-        result.barCode = getBarCode(barCode);
-        result.amount = getAmount(barCode);
-        result.expirationDate = getDate(barCode);
-    }catch(e) {
-        error.error = e;
-        return error;
-    }
+    result.barCode = getBarCode(barCode);
+    result.amount = getAmount(barCode);
+    result.expirationDate = getDate(barCode);
 
     return result;
 };

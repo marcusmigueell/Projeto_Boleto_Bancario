@@ -56,27 +56,19 @@ const getDate = barCode => {
 const getResult = barCode => {
 
     let result = {};
-    let error = {};
 
-    try {
-        const newBarCode = getBarCode(barCode);
-        const amount = getAmount(newBarCode);
-        const expirationDate = getDate(newBarCode);
+    const newBarCode = getBarCode(barCode);
+    const amount = getAmount(newBarCode);
+    const expirationDate = getDate(newBarCode);
+
         // Retornar data de vencimento do boleto entre os dados finais para controller se existir.
-        if(expirationDate !== false) {
-            result.barCode = newBarCode;
-            result.amount = amount;
-            result.expirationDate = expirationDate;
-        } else {
-            result.barCode = newBarCode;
-            result.amount = amount;
-        }
-
-    }catch(e) {
-            
-        error.error = e;
-        return error;
-
+    if(expirationDate !== false) {
+        result.barCode = newBarCode;
+        result.amount = amount;
+        result.expirationDate = expirationDate;
+    } else {
+        result.barCode = newBarCode;
+        result.amount = amount;
     }
 
     return result;

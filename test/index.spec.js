@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('./server');
+const app = require('../src/app');
 
 
 describe('Código de barras de convênio - SUCCESS.', () => {
@@ -13,6 +13,13 @@ describe('Código de barras de convênio - SUCCESS.', () => {
 
     it('Sem informação - data vencimento.', async () => {
         const res = await request(app).get('/boleto/836500000010007001380000667863106114000347150294');
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).toHaveProperty('barCode');
+        expect(res.body).toHaveProperty('amount');
+    });
+
+    it('Sem informação - data vencimento.', async () => {
+        const res = await request(app).get('/boleto/822100002150048200974128322015409822901086059408');
         expect(res.statusCode).toEqual(200);
         expect(res.body).toHaveProperty('barCode');
         expect(res.body).toHaveProperty('amount');
